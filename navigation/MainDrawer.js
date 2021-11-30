@@ -7,6 +7,7 @@ import {
 } from "@react-navigation/drawer";
 import { HomeScreen } from "../screens/Home";
 import { ProfileScreen } from "../screens/Profile";
+import { supabase } from "../utils/supabase";
 
 const CustomDrawer = (props) => {
   return (
@@ -18,6 +19,7 @@ const CustomDrawer = (props) => {
       <Button
         title="Logout"
         onPress={() => {
+          supabase.auth.signOut();
           props.navigation.closeDrawer();
         }}
       ></Button>

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Input, Button } from "react-native-elements";
+import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { supabase } from "../utils/supabase";
 
-export const LoginScreen = ({ navigation }) => {
+export const SignupScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signIn({ email, password });
+  const handleSignup = async () => {
+    const { error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       console.log(error);
@@ -39,8 +39,8 @@ export const LoginScreen = ({ navigation }) => {
         />
 
         <Button
-          title="Login"
-          onPress={handleLogin}
+          title="Sign Up"
+          onPress={handleSignup}
           icon={
             <Icon
               name="user"
@@ -53,9 +53,9 @@ export const LoginScreen = ({ navigation }) => {
       </View>
       <View>
         <Text>
-          Not a user?{" "}
-          <Pressable onPress={() => navigation.navigate("SignUp")}>
-            <Text>Sign Up!</Text>
+          Already a user?{" "}
+          <Pressable onPress={() => navigation.navigate("Login")}>
+            <Text>Login</Text>
           </Pressable>
         </Text>
       </View>
