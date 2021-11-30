@@ -8,6 +8,8 @@ import {
   View,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { Heading } from "native-base";
+import { useSession } from "../utils/authContext";
 
 const MyModal = ({ isVisible, onClick }) => {
   return (
@@ -27,6 +29,7 @@ const MyModal = ({ isVisible, onClick }) => {
 
 export const HomeScreen = ({ navigation }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const { user } = useSession();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -41,6 +44,8 @@ export const HomeScreen = ({ navigation }) => {
       {/* MODAL */}
       <MyModal isVisible={showModal} onClick={() => setShowModal(false)} />
       {/* PAGE CONTENT */}
+      <Heading size="xl">Welcome, {user.email}!</Heading>
+
       <Text>Click to see Details!</Text>
       <StatusBar style="auto" />
       <Button

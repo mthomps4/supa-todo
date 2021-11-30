@@ -2,13 +2,26 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
+import { useSession } from "../utils/authContext";
+import { Center } from "native-base";
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({ navigation }) => {
+  const { user } = useSession();
+
+  console.log({ user });
   return (
-    <View style={styles.container}>
-      <Text>This is the Profile screen</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Center flex={1} px="3">
+      {/* <Center
+        bg="primary.400"
+        height={200}
+        width={{
+          base: 200,
+          lg: 400,
+        }}
+      > */}
+      <Text> Email: {user.email} </Text>
+      {/* </Center> */}
+    </Center>
   );
 };
 

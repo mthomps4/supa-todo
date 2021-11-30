@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Input, Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { Input, Icon, Button } from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
 import { supabase } from "../utils/supabase";
 
 export const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleLogin = async () => {
+    setSubmitting(true);
     const { error } = await supabase.auth.signIn({ email, password });
 
     if (error) {
       console.log(error);
     }
+
+    setSubmitting(false);
   };
 
   return (
@@ -22,34 +26,38 @@ export const LoginScreen = ({ navigation }) => {
       <View>
         <Input
           placeholder="Email"
+          // InputLeftElement={
+          //   <Icon
+          //     as={<MaterialIcons name="person" />}
+          //     size={5}
+          //     margin="3"
+          //     color="blue.400"
+          //   />
+          // }
+          size="md"
+          mb="4"
           label="Email"
           value={email}
-          onChangeText={(value) => setEmail(value)}
-          leftIcon={{ type: "font-awesome", name: "envelope" }}
+          onChange={(e) => setEmail(e.target.value)}
+          isRequired
         />
 
         <Input
+          type="password"
           placeholder="Password"
-          label="Password"
           value={password}
-          onChangeText={(value) => setPassword(value)}
-          passwordRules="required: upper; required: lower; minlength: 8"
-          leftIcon={{ type: "font-awesome", name: "lock" }}
-          secureTextEntry={true}
+          mb="4"
+          onChange={(e) => setPassword(e.target.value)}
+          isRequired
         />
 
         <Button
-          title="Login"
           onPress={handleLogin}
-          icon={
-            <Icon
-              name="user"
-              size={20}
-              color="white"
-              style={{ paddingRight: 8 }}
-            />
-          }
-        />
+          isLoading={submitting}
+          isLoadingText="Logging in..."
+        >
+          Login
+        </Button>
       </View>
       <View>
         <Text>

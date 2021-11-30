@@ -4,7 +4,8 @@ import { HomeStack } from "./navigation/HomeStack";
 import { AuthStack } from "./navigation/AuthStack";
 import { UserContextProvider, useSession } from "./utils/authContext";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ThemeProvider } from "react-native-elements";
+import { NativeBaseProvider } from "native-base";
+
 export default function App() {
   const AppStack = () => {
     const { user } = useSession();
@@ -13,13 +14,13 @@ export default function App() {
 
   return (
     <UserContextProvider>
-      <ThemeProvider>
+      <NativeBaseProvider>
         <SafeAreaProvider>
           <NavigationContainer>
             <AppStack />
           </NavigationContainer>
         </SafeAreaProvider>
-      </ThemeProvider>
+      </NativeBaseProvider>
     </UserContextProvider>
   );
 }
